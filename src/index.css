@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* Adobe Fonts - Proxima Nova (typekit ocb2xpv) loaded via index.html */
+
+/* Meli Play Design System – semantic tokens */
+@theme {
+  /* Background */
+  --color-background-overlay: #1a1a1a;
+  --color-background-primary: #313131;
+  --color-background-muted: #767676;
+  --color-background-secondary: #ffe600;
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-subtle: #999999;
+  --color-text-inverse: #000000;
+  --color-text-accent: #ffe600;
+
+  /* Action / Border */
+  --color-action-primary: #ffe600;
+  --color-border-default: #484848;
+
+  /* Radius */
+  --radius-6: 6px;
+
+  /* Font sizes (design system) */
+  --font-size-caption: 11px;
+  --font-size-body: 14px;
+  --font-size-body-lg: 16px;
+  --font-size-title-sm: 20px;
+  --font-size-title-lg: 32px;
+
+  /* Font family – Proxima Nova from Adobe Fonts */
+  --font-sans: "proxima-nova", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* CSS custom properties for components (slashes as fallback for Tailwind) */
+  --background-overlay: #1a1a1a;
+  --background-primary: #313131;
+  --background-muted: #767676;
+  --background-secondary: #ffe600;
+  --text-primary: #ffffff;
+  --text-subtle: #999999;
+  --text-inverse: #000000;
+  --text-accent: #ffe600;
+  --action-primary: #ffe600;
+  --border-default: #484848;
+  --border-radius-6: 6px;
+  --font-size-caption: 11px;
+  --font-size-body: 14px;
+  --font-size-body-lg: 16px;
+  --font-size-title-sm: 20px;
+  --font-size-title-lg: 32px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: var(--background-overlay);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Shelves: horizontal scroll, scrollbar hidden */
+.shelf-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.shelf-scroll::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
