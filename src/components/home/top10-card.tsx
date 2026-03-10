@@ -5,7 +5,7 @@ export interface Top10CardProps {
   src: string;
   alt?: string;
   className?: string;
-  /** Design system state: default (number hidden) or focus (number visible, yellow, ring) */
+  /** Design system: default (outlined gradient number) | focus (filled yellow number + ring around thumbnail) */
   focused?: boolean;
 }
 
@@ -19,24 +19,28 @@ export function Top10Card({
   return (
     <article
       className={cn(
-        "relative h-[224px] w-[205px] shrink-0 rounded-[var(--radius-6)]",
-        "overflow-visible",
-        focused && "ring-2 ring-action-primary ring-offset-2 ring-offset-background-overlay rounded-[10px] ring-offset-[-2px]",
+        "relative h-[224px] w-[205px] shrink-0 overflow-visible rounded-[var(--radius-6)]",
         className
       )}
     >
-      {/* Rank number: left-aligned, baseline at bottom; visible only in focus state */}
+      {/* Rank: default = outlined + gradient fill; focus = filled yellow (design system) */}
       <span
         className={cn(
           "absolute left-0 bottom-0 flex h-[144px] items-end font-bold leading-none tracking-[-30px] text-[144px]",
-          focused ? "text-text-accent" : "text-transparent"
+          focused ? "text-text-accent" : "top10-number-outline"
         )}
         aria-hidden
       >
         {rank}
       </span>
-      {/* Image: right part only, clip overflow */}
-      <div className="absolute inset-y-0 left-[61px] right-0 overflow-hidden rounded-r-[var(--radius-6)] bg-background-primary">
+      {/* Thumbnail: from 61px left; radius 6 on all 4 corners; focus ring around thumbnail only */}
+      <div
+        className={cn(
+          "absolute inset-y-0 left-[61px] right-0 overflow-hidden rounded-[var(--radius-6)] bg-background-primary",
+          focused &&
+            "ring-2 ring-action-primary ring-offset-4 ring-offset-background-overlay rounded-[10px]"
+        )}
+      >
         <img
           src={src}
           alt={alt}

@@ -26,7 +26,7 @@ export function Shelf({ title, icon, children, className }: ShelfProps) {
           {title}
         </h2>
       </div>
-      <div className="shelf-scroll flex gap-4 pb-2">
+      <div className="shelf-scroll flex gap-4 pb-2" data-shelf-scroll>
         {children}
       </div>
     </section>

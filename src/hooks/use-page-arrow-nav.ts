@@ -1,11 +1,87 @@
 import { useCallback } from "react";
 
 const SIDEBAR_SELECTOR = "[data-focusable-sidebar]";
+const SHELF_SCROLL_SELECTOR = "[data-shelf-scroll]";
 const GRID_ROW_ATTR = "data-focus-row";
 const GRID_COL_ATTR = "data-focus-col";
 const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
 type Grid = Map<number, Map<number, HTMLElement>>;
+
+// TV/streaming-style: snappy duration, ease-out (quick response, soft landing)
+const SCROLL_DURATION_MS = 280;
+// Focus position: 0.25 = focused item at 25% from left of shelf (more "next" content visible to the right)
+const FOCUS_OFFSET_RATIO = 0.25;
+
+function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+type ScrollOptions = {
+  /** When false, only scroll shelf horizontally (e.g. when moving left/right within same row). */
+  scrollVertical?: boolean;
+};
+
+/**
+ * TV-style scroll: shelf scroll always (horizontal), optional page scroll (vertical).
+ * - Left/Right: only shelf scrolls, focused item at FOCUS_OFFSET_RATIO from left.
+ * - Up/Down or from sidebar: shelf + page scroll so item is centered on screen.
+ * Uses one rAF so the animation starts on the next frame (minimal delay).
+ */
+function scrollFocusedToCenter(element: HTMLElement, options: ScrollOptions = {}) {
+  const { scrollVertical = true } = options;
+
+  requestAnimationFrame(() => {
+    const shelf = element.closest<HTMLElement>(SHELF_SCROLL_SELECTOR);
+    const doc = document.scrollingElement ?? document.documentElement;
+
+    let targetScrollLeft: number | null = null;
+    if (shelf) {
+      const elRect = element.getBoundingClientRect();
+      const shelfRect = shelf.getBoundingClientRect();
+      const contentLeft = elRect.left - shelfRect.left + shelf.scrollLeft;
+      const elementCenterX = contentLeft + elRect.width / 2;
+      const targetCenterInView = shelf.clientWidth * FOCUS_OFFSET_RATIO;
+      targetScrollLeft = Math.max(
+        0,
+        Math.min(
+          elementCenterX - targetCenterInView,
+          shelf.scrollWidth - shelf.clientWidth
+        )
+      );
+    }
+
+    let targetScrollTop: number | undefined;
+    if (scrollVertical) {
+      const viewportCenter = window.innerHeight / 2;
+      const elRect = element.getBoundingClientRect();
+      const elementCenterY = elRect.top + elRect.height / 2;
+      targetScrollTop = doc.scrollTop + (elementCenterY - viewportCenter);
+    }
+
+    const startTime = performance.now();
+    const startScrollLeft = shelf ? shelf.scrollLeft : 0;
+    const startScrollTop = doc.scrollTop;
+
+    function tick(now: number) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / SCROLL_DURATION_MS, 1);
+      const eased = easeOutCubic(t);
+
+      if (shelf && targetScrollLeft !== null) {
+        const distLeft = targetScrollLeft - startScrollLeft;
+        shelf.scrollLeft = startScrollLeft + distLeft * eased;
+      }
+      if (scrollVertical && targetScrollTop !== undefined) {
+        const distTop = targetScrollTop - startScrollTop;
+        doc.scrollTop = startScrollTop + distTop * eased;
+      }
+
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
 
 function buildContentGrid(container: HTMLElement): Grid {
   const grid: Grid = new Map();
@@ -64,6 +140,7 @@ export function usePageArrowNav(
             if (first) {
               e.preventDefault();
               first.focus();
+              scrollFocusedToCenter(first, { scrollVertical: true });
             }
           }
           return;
@@ -102,6 +179,7 @@ export function usePageArrowNav(
           if (prev) {
             e.preventDefault();
             prev.focus();
+            scrollFocusedToCenter(prev, { scrollVertical: false });
           }
         } else {
           const sidebarItems = Array.from(
@@ -122,6 +200,7 @@ export function usePageArrowNav(
         if (next) {
           e.preventDefault();
           next.focus();
+          scrollFocusedToCenter(next, { scrollVertical: false });
         }
         return;
       }
@@ -138,6 +217,7 @@ export function usePageArrowNav(
           if (next) {
             e.preventDefault();
             next.focus();
+            scrollFocusedToCenter(next, { scrollVertical: true });
           }
         }
         return;
@@ -155,6 +235,7 @@ export function usePageArrowNav(
           if (prev) {
             e.preventDefault();
             prev.focus();
+            scrollFocusedToCenter(prev, { scrollVertical: true });
           }
         }
         return;
