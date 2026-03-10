@@ -2,56 +2,96 @@
 
 /* Adobe Fonts - Proxima Nova (typekit ocb2xpv) loaded via index.html */
 
-/* Meli Play Design System – semantic tokens */
-@theme {
-  /* Background */
-  --color-background-overlay: #1a1a1a;
-  --color-background-primary: #313131;
-  --color-background-muted: #767676;
-  --color-background-secondary: #ffe600;
+/* =============================================================================
+   Meli Play Design System (Figma: MeliPlay - Design System - UX Challenge)
+   Structure: Primitives → Semantics → Theme
+   ============================================================================= */
 
-  /* Text */
-  --color-text-primary: #ffffff;
-  --color-text-subtle: #999999;
-  --color-text-inverse: #000000;
-  --color-text-accent: #ffe600;
+/* ---------- PRIMITIVES (raw values from Figma) ---------- */
+:root {
+  /* Neutral palette */
+  --primitive-neutral-900: #1a1a1a;
+  --primitive-neutral-800: #313131;
+  --primitive-neutral-600: #484848;
+  --primitive-neutral-500: #767676;
+  --primitive-neutral-400: #999999;
 
-  /* Action / Border */
-  --color-action-primary: #ffe600;
-  --color-border-default: #484848;
+  /* Brand / Action */
+  --primitive-yellow-500: #ffe600;
+
+  /* Base */
+  --primitive-white: #ffffff;
+  --primitive-black: #000000;
 
   /* Radius */
-  --radius-6: 6px;
+  --primitive-radius-6: 6px;
 
-  /* Font sizes (design system) */
-  --font-size-caption: 11px;
-  --font-size-body: 14px;
-  --font-size-body-lg: 16px;
-  --font-size-title-sm: 20px;
-  --font-size-title-lg: 32px;
+  /* Font sizes (primitives) */
+  --primitive-font-size-caption: 11px;
+  --primitive-font-size-body: 14px;
+  --primitive-font-size-body-lg: 16px;
+  --primitive-font-size-title-sm: 20px;
+  --primitive-font-size-title-lg: 32px;
+}
+
+/* ---------- SEMANTICS (Figma: background/primary, text/primary, action/primary, border/default) ---------- */
+:root {
+  /* Background – maps to Figma background/overlay, background/primary, etc. */
+  --background-overlay: var(--primitive-neutral-900);
+  --background-primary: var(--primitive-neutral-800);
+  --background-muted: var(--primitive-neutral-500);
+  --background-secondary: var(--primitive-yellow-500);
+
+  /* Text – maps to Figma text/primary, text/subtle, text/inverse, text/accent */
+  --text-primary: var(--primitive-white);
+  --text-subtle: var(--primitive-neutral-400);
+  --text-inverse: var(--primitive-black);
+  --text-accent: var(--primitive-yellow-500);
+
+  /* Action – maps to Figma action/primary */
+  --action-primary: var(--primitive-yellow-500);
+
+  /* Border – maps to Figma border/default */
+  --border-default: var(--primitive-neutral-600);
+
+  /* Radius */
+  --radius-6: var(--primitive-radius-6);
+  --border-radius-6: var(--primitive-radius-6);
+
+  /* Font sizes */
+  --font-size-caption: var(--primitive-font-size-caption);
+  --font-size-body: var(--primitive-font-size-body);
+  --font-size-body-lg: var(--primitive-font-size-body-lg);
+  --font-size-title-sm: var(--primitive-font-size-title-sm);
+  --font-size-title-lg: var(--primitive-font-size-title-lg);
 
   /* Font family – Proxima Nova from Adobe Fonts */
   --font-sans: "proxima-nova", ui-sans-serif, system-ui, sans-serif;
 }
 
-:root {
-  /* CSS custom properties for components (slashes as fallback for Tailwind) */
-  --background-overlay: #1a1a1a;
-  --background-primary: #313131;
-  --background-muted: #767676;
-  --background-secondary: #ffe600;
-  --text-primary: #ffffff;
-  --text-subtle: #999999;
-  --text-inverse: #000000;
-  --text-accent: #ffe600;
-  --action-primary: #ffe600;
-  --border-default: #484848;
-  --border-radius-6: 6px;
-  --font-size-caption: 11px;
-  --font-size-body: 14px;
-  --font-size-body-lg: 16px;
-  --font-size-title-sm: 20px;
-  --font-size-title-lg: 32px;
+/* Tailwind @theme – uses semantic tokens so utilities stay consistent */
+@theme {
+  --color-background-overlay: var(--background-overlay);
+  --color-background-primary: var(--background-primary);
+  --color-background-muted: var(--background-muted);
+  --color-background-secondary: var(--background-secondary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-subtle: var(--text-subtle);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-accent: var(--text-accent);
+
+  --color-action-primary: var(--action-primary);
+
+  --color-border-default: var(--border-default);
+
+  --radius-6: var(--radius-6);
+  --font-size-caption: var(--font-size-caption);
+  --font-size-body: var(--font-size-body);
+  --font-size-body-lg: var(--font-size-body-lg);
+  --font-size-title-sm: var(--font-size-title-sm);
+  --font-size-title-lg: var(--font-size-title-lg);
+  --font-sans: var(--font-sans);
 }
 
 body {

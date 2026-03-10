@@ -49,11 +49,25 @@ export function Hero() {
           </p>
         </div>
         <div className="flex gap-4">
-          <Button variant="primary" size="default">
+          <Button
+            variant="primary"
+            size="default"
+            data-focusable-main
+            data-focus-row={0}
+            data-focus-col={0}
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-overlay"
+          >
             <Play className="size-4 fill-current" />
             Ver ahora
           </Button>
-          <Button variant="secondary" size="default">
+          <Button
+            variant="secondary"
+            size="default"
+            data-focusable-main
+            data-focus-row={0}
+            data-focus-col={1}
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-overlay"
+          >
             Más información
           </Button>
         </div>

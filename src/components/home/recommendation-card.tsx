@@ -12,6 +12,8 @@ export interface RecommendationCardProps {
   description?: string;
   className?: string;
   focused?: boolean;
+  /** Set to -1 when card is wrapped in a focusable container (e.g. arrow-key nav) to avoid double tab stop */
+  linkTabIndex?: number;
 }
 
 export function RecommendationCard({
@@ -24,10 +26,12 @@ export function RecommendationCard({
   description,
   className,
   focused,
+  linkTabIndex,
 }: RecommendationCardProps) {
   return (
     <a
       href="#"
+      tabIndex={linkTabIndex}
       className={cn(
         "flex h-[224px] shrink-0 cursor-pointer items-center rounded-[var(--radius-6)]",
         focused && "outline outline-2 outline-action-primary outline-offset-[-4px] rounded-[10px]",
