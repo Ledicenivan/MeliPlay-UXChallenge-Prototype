@@ -5,13 +5,13 @@ import { Shelf } from "@/components/home/shelf";
 import { ContentCard } from "@/components/home/content-card";
 import { Top10Card } from "@/components/home/top10-card";
 import { RecommendationCard } from "@/components/home/recommendation-card";
+import { FocusableCard } from "@/components/home/focusable-card";
 import { assets } from "@/assets/images";
 import { Users } from "lucide-react";
 import { usePageArrowNav } from "@/hooks/use-page-arrow-nav";
-import { cn } from "@/lib/utils";
 
 const focusableCardWrapperClass =
-  "shrink-0 rounded-[var(--radius-6)] outline-none focus-visible:ring-2 focus-visible:ring-action-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-overlay";
+  "shrink-0 outline-none cursor-pointer";
 
 export function HomePage() {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -41,12 +41,12 @@ export function HomePage() {
             title="Recomendaciones de amigos"
             icon={<Users className="size-7" strokeWidth={1.5} />}
           >
-            <div
+            <FocusableCard
               tabIndex={0}
               data-focusable-main
               data-focus-row={1}
               data-focus-col={0}
-              className={cn(focusableCardWrapperClass, "cursor-pointer")}
+              className={focusableCardWrapperClass}
             >
               <RecommendationCard
                 thumbnailSrc={assets.thumbnails[0]}
@@ -56,27 +56,50 @@ export function HomePage() {
                 year="2024"
                 genre="Drama"
                 description="Lorem ipsum dolor sit amet consectetur. Tristique et at orci pulvinar at."
-                focused
                 linkTabIndex={-1}
               />
-            </div>
-            <div tabIndex={0} data-focusable-main data-focus-row={1} data-focus-col={1} className={focusableCardWrapperClass}>
-              <ContentCard
-                src={assets.thumbnails[1]}
-                className="h-[224px] w-[144px]"
+            </FocusableCard>
+            <FocusableCard
+              tabIndex={0}
+              data-focusable-main
+              data-focus-row={1}
+              data-focus-col={1}
+              className={focusableCardWrapperClass}
+            >
+              <RecommendationCard
+                thumbnailSrc={assets.thumbnails[1]}
+                recommendedBy="Nombre"
+                quote="Lorem ipsum dolor sit amet consectetur. Tristique et at orci pulvinar at. Id arcu pharetra massa sit sodales nam est sed mi."
+                title="Nombre del Contenido"
+                year="2024"
+                genre="Drama"
+                description="Lorem ipsum dolor sit amet consectetur. Tristique et at orci pulvinar at."
+                linkTabIndex={-1}
               />
-            </div>
-            <div tabIndex={0} data-focusable-main data-focus-row={1} data-focus-col={2} className={focusableCardWrapperClass}>
-              <ContentCard
-                src={assets.thumbnails[2]}
-                className="h-[224px] w-[144px]"
+            </FocusableCard>
+            <FocusableCard
+              tabIndex={0}
+              data-focusable-main
+              data-focus-row={1}
+              data-focus-col={2}
+              className={focusableCardWrapperClass}
+            >
+              <RecommendationCard
+                thumbnailSrc={assets.thumbnails[2]}
+                recommendedBy="Nombre"
+                quote="Lorem ipsum dolor sit amet consectetur. Tristique et at orci pulvinar at. Id arcu pharetra massa sit sodales nam est sed mi."
+                title="Nombre del Contenido"
+                year="2024"
+                genre="Drama"
+                description="Lorem ipsum dolor sit amet consectetur. Tristique et at orci pulvinar at."
+                linkTabIndex={-1}
               />
-            </div>
+            </FocusableCard>
           </Shelf>
 
           <Shelf title="Top 10 películas">
             {assets.thumbnails.slice(2, 12).map((src, i) => (
-              <div
+              <FocusableCard
                 key={i}
                 tabIndex={0}
                 data-focusable-main
@@ -84,18 +107,14 @@ export function HomePage() {
                 data-focus-col={i}
                 className={focusableCardWrapperClass}
               >
-                <Top10Card
-                  rank={i + 1}
-                  src={src}
-                  focused={i === 0}
-                />
-              </div>
+                <Top10Card rank={i + 1} src={src} />
+              </FocusableCard>
             ))}
           </Shelf>
 
           <Shelf title="Próxima parada: Holliwood">
             {assets.thumbnails.slice(12, 22).map((src, i) => (
-              <div
+              <FocusableCard
                 key={i}
                 tabIndex={0}
                 data-focusable-main
@@ -103,17 +122,14 @@ export function HomePage() {
                 data-focus-col={i}
                 className={focusableCardWrapperClass}
               >
-                <ContentCard
-                  src={src}
-                  focused={i === 0}
-                />
-              </div>
+                <ContentCard src={src} />
+              </FocusableCard>
             ))}
           </Shelf>
 
           <Shelf title="Elige tu próxima historia">
             {assets.thumbnails.slice(2, 12).map((src, i) => (
-              <div
+              <FocusableCard
                 key={i}
                 tabIndex={0}
                 data-focusable-main
@@ -122,7 +138,7 @@ export function HomePage() {
                 className={focusableCardWrapperClass}
               >
                 <ContentCard src={src} />
-              </div>
+              </FocusableCard>
             ))}
           </Shelf>
 

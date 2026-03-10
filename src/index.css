@@ -102,20 +102,42 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Shelves: horizontal scroll, scrollbar hidden */
+/* Shelves: horizontal scroll, scrollbar hidden; padding so focus rings (4px offset) aren't clipped */
 .shelf-scroll {
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
 }
 .shelf-scroll::-webkit-scrollbar {
   display: none;
   height: 0;
+}
+
+/* Top10 card – default state: outlined number with gradient fill (design system) */
+.top10-number-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px var(--text-accent);
+  background: linear-gradient(
+    180deg,
+    var(--text-accent) 0%,
+    rgba(255, 230, 0, 0.3) 45%,
+    transparent 70%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
 }
