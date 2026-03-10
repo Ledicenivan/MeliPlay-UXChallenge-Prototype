@@ -8,7 +8,7 @@ export function useRovingTabIndex(
   _itemCount: number,
   options?: { orientation?: "vertical" | "horizontal"; loop?: boolean }
 ) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
   const { orientation = "vertical", loop = true } = options ?? {};
   const isVertical = orientation === "vertical";
 
